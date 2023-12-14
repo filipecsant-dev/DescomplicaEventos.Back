@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace DescomplicaEventos.API.ViewModel.Shared
+namespace DescomplicaEventos.Application.ViewModel.Shared
 {
     public class CustomResult
     {

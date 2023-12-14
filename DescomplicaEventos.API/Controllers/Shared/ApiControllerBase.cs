@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using DescomplicaEventos.API.Extensions;
-using DescomplicaEventos.API.ViewModel.Shared;
+using DescomplicaEventos.Application.ViewModel.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DescomplicaEventos.API.Controllers.Shared

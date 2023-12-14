@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using DescomplicaEventos.API.ViewModel.Shared;
+using DescomplicaEventos.Application.ViewModel.Shared;
 using Newtonsoft.Json;
 
 namespace DescomplicaEventos.API.Middlewares

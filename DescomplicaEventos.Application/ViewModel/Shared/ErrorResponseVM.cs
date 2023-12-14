@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DescomplicaEventos.API.ViewModel.Shared
+namespace DescomplicaEventos.Application.ViewModel.Shared
 {
     public class ErrorResponseVM
     {
