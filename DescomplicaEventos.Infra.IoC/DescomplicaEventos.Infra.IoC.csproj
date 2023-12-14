@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\DescomplicaEventos.Domain\DescomplicaEventos.Domain.csproj" />
+    <ProjectReference Include="..\DescomplicaEventos.Application\DescomplicaEventos.Application.csproj" />
+    <ProjectReference Include="..\DescomplicaEventos.Infra.Data\DescomplicaEventos.Infra.Data.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
