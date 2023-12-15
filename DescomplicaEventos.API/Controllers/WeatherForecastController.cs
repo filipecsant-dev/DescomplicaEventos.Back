@@ -21,6 +21,7 @@ public class WeatherForecastController : ApiControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IActionResult Get()
     {
+        throw new Exception("teste");
         var teste = Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

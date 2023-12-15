@@ -11,7 +11,7 @@ namespace DescomplicaEventos.Application.ViewModel.Shared
         public HttpStatusCode StatusCode { get; private set; }
         public bool Success { get; private set; }
         public object Data { get; private set; }
-        public IEnumerable<string> Errors { get; private set; }
+        public IEnumerable<string> Errors { get; protected set; }
         
         public CustomResult(HttpStatusCode statusCode, bool success)
         {

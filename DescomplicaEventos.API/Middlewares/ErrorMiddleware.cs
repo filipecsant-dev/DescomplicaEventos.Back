@@ -34,17 +34,18 @@ namespace DescomplicaEventos.API.Middlewares
             //TODO: Gravar log de erro com o trace id
 
             ErrorResponseVM errorResponseVM;
+            var errors = new List<string>();
 
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ||
                 Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Qa")
             {
-                errorResponseVM = new ErrorResponseVM(HttpStatusCode.InternalServerError.ToString(),
-                                                      $"{ex.Message} {ex?.InnerException?.Message}");
+                errors.Add($"{ex.Message} {ex?.InnerException?.Message}");
+                errorResponseVM = new ErrorResponseVM(HttpStatusCode.InternalServerError, false, errors);
             }
             else
             {
-                errorResponseVM = new ErrorResponseVM(HttpStatusCode.InternalServerError.ToString(),
-                                                      "Ocorreu um erro interno do servidor.");
+                errors.Add("Ocorreu um erro interno do servidor.");
+                errorResponseVM = new ErrorResponseVM(HttpStatusCode.InternalServerError, false, errors);
             }
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

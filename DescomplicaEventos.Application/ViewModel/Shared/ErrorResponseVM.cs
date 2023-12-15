@@ -1,44 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DescomplicaEventos.Application.ViewModel.Shared
 {
-    public class ErrorResponseVM
+    public class ErrorResponseVM : CustomResult
     {
-        public ErrorResponseVM()
-        {
-            TraceId = Guid.NewGuid().ToString();
-            Errors = new List<ErrorDetailsVm>();
-        }
-
-        public ErrorResponseVM(string logref, string message)
-        {
-            TraceId = Guid.NewGuid().ToString();
-            Errors = new List<ErrorDetailsVm>();
-            AddError(logref, message);
-        }
-
         public string TraceId { get; private set; }
-        public List<ErrorDetailsVm> Errors { get; private set; }
 
-        public class ErrorDetailsVm
+        public ErrorResponseVM(HttpStatusCode statusCode, bool success) : base(statusCode, success)
         {
-            public ErrorDetailsVm(string logref, string message)
-            {
-                Logref = logref;
-                Message = message;
-            }
-
-            public string Logref { get; private set; }
-
-            public string Message { get; private set; }
+            TraceId = Guid.NewGuid().ToString();
         }
 
-        public void AddError(string logref, string message)
+        public ErrorResponseVM(HttpStatusCode statusCode, bool success, List<string> errors) : base(statusCode, success, errors)
         {
-            Errors.Add(new ErrorDetailsVm(logref, message));
+            TraceId = Guid.NewGuid().ToString();
         }
     }
 }
