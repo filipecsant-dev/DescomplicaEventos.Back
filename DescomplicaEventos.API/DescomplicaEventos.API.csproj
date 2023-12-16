@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DescomplicaEventos.Infra.IoC\DescomplicaEventos.Infra.IoC.csproj" />
     <ProjectReference Include="..\DescomplicaEventos.Application\DescomplicaEventos.Application.csproj" />
+    <ProjectReference Include="..\DescomplicaEventos.Infra.IoC\DescomplicaEventos.Infra.IoC.csproj" />
   </ItemGroup>
 
 </Project>
