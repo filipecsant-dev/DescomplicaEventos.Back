@@ -11,10 +11,10 @@ namespace DescomplicaEventos.Domain.Entities
         public DateTimeOffset? DateDelete { get; private set; }
         public bool Active { get; private set; }
 
-        protected BaseEntity(bool active = true)
+        protected BaseEntity()
         {
             Id = Guid.NewGuid();
-            Active = active;
+            Active = true;
         }
 
         public void disabledEntity()
