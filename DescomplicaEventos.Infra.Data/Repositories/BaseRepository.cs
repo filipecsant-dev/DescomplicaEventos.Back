@@ -43,7 +43,7 @@ namespace DescomplicaEventos.Infra.Data.Repositories
             return entity;
         }
 
-        public virtual async Task<TEntity> Update(TEntity entity)
+        public virtual TEntity Update(TEntity entity)
         {
             _DbSet.Update(entity);
             return entity;
@@ -55,7 +55,7 @@ namespace DescomplicaEventos.Infra.Data.Repositories
             if(entity != null)
             {
                 entity.disabledEntity();
-                await Update(entity);
+                Update(entity);
                 return entity;
             }
                 

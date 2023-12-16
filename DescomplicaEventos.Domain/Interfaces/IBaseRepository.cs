@@ -13,6 +13,6 @@ namespace DescomplicaEventos.Domain.Interfaces
         Task<TEntity> GetAsync(Guid id);
         Task<TEntity> CreateAsync(TEntity entity);
         TEntity Update(TEntity entity);
-        void Delete(TEntity entity);
+        Task<TEntity> Delete(Guid id);
     }
 }
