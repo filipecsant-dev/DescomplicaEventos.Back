@@ -8,9 +8,9 @@ using DescomplicaEventos.Domain.Interfaces;
 using DescomplicaEventos.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace DescomplicaEventos.Infra.Data.Repositories
+namespace DescomplicaEventos.Infra.Data.Repositories.Shared
 {
-    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly DbSet<TEntity> _DbSet;
         private readonly AppDbContext _context;
@@ -26,10 +26,9 @@ namespace DescomplicaEventos.Infra.Data.Repositories
 
             if(filter != null)
                 query = query
-                        .Where(filter)
-                        .AsNoTracking();
+                        .Where(filter);
 
-            return await query.ToListAsync();
+            return await query.AsNoTracking().ToListAsync();
         }
 
         public virtual async Task<TEntity> GetAsync(Guid id)

@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DescomplicaEventos.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DescomplicaEventos.Infra.Data.Context
@@ -13,7 +10,7 @@ namespace DescomplicaEventos.Infra.Data.Context
             Database.Migrate();
         }
 
-        
+        public DbSet<UserEntity> users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

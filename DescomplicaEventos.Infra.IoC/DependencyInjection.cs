@@ -1,8 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DescomplicaEventos.Application.Interfaces;
+using DescomplicaEventos.Application.Mappings;
+using DescomplicaEventos.Application.Services;
+using DescomplicaEventos.Domain.Interfaces;
 using DescomplicaEventos.Infra.Data.Context;
+using DescomplicaEventos.Infra.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,16 @@ namespace DescomplicaEventos.Infra.IoC
                 options.UseMySql(stringConexao, ServerVersion.AutoDetect(stringConexao),
                 b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
             });
+
+
+            services.AddAutoMapper(typeof(DomainMapperProfile));
+            
+            //Services
+            services.AddTransient<IUserService, UserService>();
+
+            //Repositories
+            services.AddTransient<IUserRepository, UserRepository>();
+            
 
             return services;
         }

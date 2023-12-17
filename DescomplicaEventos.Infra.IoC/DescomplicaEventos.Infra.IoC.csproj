@@ -4,6 +4,9 @@
     <ProjectReference Include="..\DescomplicaEventos.Application\DescomplicaEventos.Application.csproj" />
     <ProjectReference Include="..\DescomplicaEventos.Infra.Data\DescomplicaEventos.Infra.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
