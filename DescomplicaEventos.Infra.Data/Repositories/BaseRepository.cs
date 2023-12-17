@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DescomplicaEventos.Infra.Data.Repositories
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
+    public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         private readonly DbSet<TEntity> _DbSet;
         private readonly AppDbContext _context;
@@ -40,27 +40,42 @@ namespace DescomplicaEventos.Infra.Data.Repositories
         public virtual async Task<TEntity> CreateAsync(TEntity entity, bool save = false)
         {
             await _DbSet.AddAsync(entity);
+            
             if(save)
                 await _context.SaveChangesAsync();
 
             return entity;
         }
 
-        public virtual async Task Update(TEntity entity, bool save = false)
+        public virtual async Task<IEnumerable<TEntity>> CreateRangeAsync(IEnumerable<TEntity> entities, bool save = false)
+        {
+            await _DbSet.AddRangeAsync(entities);
+
+            if(save)
+                await _context.SaveChangesAsync();
+
+            return entities;
+        }
+
+        public virtual async Task UpdateAsync(TEntity entity, bool save = false)
         {
             _DbSet.Update(entity);
+
             if(save)
                 await _context.SaveChangesAsync();
         }
 
-        public virtual async Task Delete(Guid id)
+        public virtual async Task DeleteAsync(Guid id, bool save = false)
         {
             var entity = await _DbSet.FindAsync(id);
             if(entity != null)
             {
                 entity.disabledEntity();
-                await Update(entity);
+                await UpdateAsync(entity);
             }
+
+            if(save)
+                await _context.SaveChangesAsync();
         }
     }
 }
