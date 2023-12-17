@@ -37,29 +37,30 @@ namespace DescomplicaEventos.Infra.Data.Repositories
             return await _DbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public virtual async Task<TEntity> CreateAsync(TEntity entity)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity, bool save = false)
         {
             await _DbSet.AddAsync(entity);
+            if(save)
+                await _context.SaveChangesAsync();
+
             return entity;
         }
 
-        public virtual TEntity Update(TEntity entity)
+        public virtual async Task Update(TEntity entity, bool save = false)
         {
             _DbSet.Update(entity);
-            return entity;
+            if(save)
+                await _context.SaveChangesAsync();
         }
 
-        public virtual async Task<TEntity> Delete(Guid id)
+        public virtual async Task Delete(Guid id)
         {
             var entity = await _DbSet.FindAsync(id);
             if(entity != null)
             {
                 entity.disabledEntity();
-                Update(entity);
-                return entity;
+                await Update(entity);
             }
-                
-            return null;
         }
     }
 }

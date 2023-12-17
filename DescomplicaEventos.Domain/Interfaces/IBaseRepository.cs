@@ -12,7 +12,7 @@ namespace DescomplicaEventos.Domain.Interfaces
         Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null);
         Task<TEntity> GetAsync(Guid id);
         Task<TEntity> CreateAsync(TEntity entity);
-        TEntity Update(TEntity entity);
-        Task<TEntity> Delete(Guid id);
+        Task Update(TEntity entity);
+        Task Delete(Guid id);
     }
 }
