@@ -1,6 +1,8 @@
+using System.Net;
 using DescomplicaEventos.API.Controllers.Shared;
 using DescomplicaEventos.Application.DTOs;
 using DescomplicaEventos.Application.ViewModel;
+using DescomplicaEventos.Application.ViewModel.Shared;
 using DescomplicaEventos.Domain.Account;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +18,7 @@ namespace DescomplicaEventos.API.Controllers
         } 
 
         [HttpPost]
+        // [ProducesResponseType(typeof(CustomResult), 200)]
         public async Task<IActionResult> Authenticate([FromBody] AuthenticationDto authenticationDto)
         {
             var userExists = await _authenticateService.UserExists(authenticationDto.Email);
