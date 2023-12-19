@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DescomplicaEventos.API.Controllers.Shared;
 using DescomplicaEventos.Application.DTOs;
 using DescomplicaEventos.Application.Interfaces;
-using DescomplicaEventos.Application.ViewModel;
-using DescomplicaEventos.Application.ViewModel.Shared;
-using DescomplicaEventos.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DescomplicaEventos.API.Controllers
@@ -21,6 +15,7 @@ namespace DescomplicaEventos.API.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

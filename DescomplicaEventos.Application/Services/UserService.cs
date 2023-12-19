@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DescomplicaEventos.Application.DTOs;
@@ -32,9 +34,20 @@ namespace DescomplicaEventos.Application.Services
         public async Task<UserVM> CreateAsync(UserDto dto, bool save = false)
         {
             var mapEntitie = _mapper.Map<UserEntity>(dto);
+            var getPasswordHash = GetHashPasswordUser(mapEntitie, dto.Password);
+            mapEntitie.ChangePassword(getPasswordHash.passwordHash, getPasswordHash.passwordSalt);
             var entity = await _repository.CreateAsync(mapEntitie, save);
             var retorno = _mapper.Map<UserVM>(entity);
             return retorno;
+        }
+
+        private (byte[] passwordHash, byte[] passwordSalt) GetHashPasswordUser(UserEntity user, string password)
+        {
+            using var hmac = new HMACSHA512();
+            byte[] passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+            byte[] passwordSalt = hmac.Key;
+
+            return (passwordHash, passwordSalt);
         }
     }
 }
