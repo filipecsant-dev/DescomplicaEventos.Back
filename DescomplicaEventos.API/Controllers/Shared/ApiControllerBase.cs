@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using DescomplicaEventos.API.Extensions;
-using DescomplicaEventos.Application.ViewModel.Shared;
+using DescomplicaEventos.Application.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DescomplicaEventos.API.Controllers.Shared
 {
     [ApiController]
+    [Route("[controller]")]
     public abstract class ApiControllerBase : ControllerBase
     {
         protected IActionResult ResponseOk(object result) =>
@@ -30,23 +27,23 @@ namespace DescomplicaEventos.API.Controllers.Shared
         protected IActionResult ResponseNotModified() =>
             Response(HttpStatusCode.NotModified);
 
-        protected IActionResult ResponseBadRequest(string errorMessage) =>
-            Response(HttpStatusCode.BadRequest, errorMessage: errorMessage);
+        protected IActionResult ResponseBadRequest(IEnumerable<string> errors) =>
+            Response(HttpStatusCode.BadRequest, errors);
 
         protected IActionResult ResponseBadRequest() =>
             Response(HttpStatusCode.BadRequest, errorMessage: "A requisição é inválida");
 
-        protected IActionResult ResponseNotFound(string errorMessage) =>
-            Response(HttpStatusCode.NotFound, errorMessage: errorMessage);
+        protected IActionResult ResponseNotFound(IEnumerable<string> errors) =>
+            Response(HttpStatusCode.NotFound, errors);
 
         protected IActionResult ResponseNotFound() =>
             Response(HttpStatusCode.NotFound, errorMessage: "O recurso não foi encontrado");
 
-        protected IActionResult ResponseUnauthorized(string errorMessage) =>
-            Response(HttpStatusCode.Unauthorized, errorMessage: errorMessage);
+        protected IActionResult ResponseUnauthorized(IEnumerable<string> errors) =>
+            Response(HttpStatusCode.Unauthorized, errors);
 
         protected IActionResult ResponseUnauthorized() =>
-            Response(HttpStatusCode.Unauthorized, errorMessage:"Permissão negada");
+            Response(HttpStatusCode.Unauthorized, errorMessage: "Permissão negada");
 
         protected IActionResult ResponseInternalServerError() =>
             Response(HttpStatusCode.InternalServerError);
@@ -57,36 +54,40 @@ namespace DescomplicaEventos.API.Controllers.Shared
         protected IActionResult ResponseInternalServerError(Exception exception) =>
             Response(HttpStatusCode.InternalServerError, errorMessage: exception.Message);
 
-        protected new JsonResult Response(HttpStatusCode statusCode, object data, string errorMessage)
+        protected new JsonResult Response(HttpStatusCode statusCode, object data,  IEnumerable<string> errors)
         {
-            CustomResult result = null;
+            var result = new object();
 
-            if (string.IsNullOrWhiteSpace(errorMessage))
+            if (errors == null)
             {
                 var success = statusCode.IsSuccess();
 
                 if (data != null)
-                    result = new CustomResult(statusCode, success, data);
+                    result = new CustomResultSuccess(success, data);
                 else
-                    result = new CustomResult(statusCode, success);
+                    result = new CustomResultSuccess(success);
             }
             else
             {
-                var errors = new List<string>();
-
-                if (!string.IsNullOrWhiteSpace(errorMessage))
-                    errors.Add(errorMessage);
-
-                result = new CustomResult(statusCode, false, errors);
+                result = new CustomResultError(false, errors);
             }
-            return new JsonResult(result) { StatusCode = (int)result.StatusCode };
+            return new JsonResult(result);
         }
 
         protected new JsonResult Response(HttpStatusCode statusCode, object result) =>
             Response(statusCode, result, null);
 
-        protected new JsonResult Response(HttpStatusCode statusCode, string errorMessage) =>
-            Response(statusCode, null, errorMessage);
+        protected new JsonResult Response(HttpStatusCode statusCode, IEnumerable<string> errors) =>
+            Response(statusCode, null, errors);
+
+        protected new JsonResult Response(HttpStatusCode statusCode, string errorMessage)
+        {
+            var errors = new List<string>();
+            errors.Add(errorMessage);
+
+            return Response(statusCode, null, errors);
+        }
+            
 
         protected new JsonResult Response(HttpStatusCode statusCode) =>
             Response(statusCode, null, null);

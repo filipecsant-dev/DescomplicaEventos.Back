@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using DescomplicaEventos.Application.ViewModel.Shared;
+using DescomplicaEventos.Application.ViewModel;
 using Newtonsoft.Json;
 
 namespace DescomplicaEventos.API.Middlewares
@@ -40,12 +36,12 @@ namespace DescomplicaEventos.API.Middlewares
                 Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Qa")
             {
                 errors.Add($"{ex.Message} {ex?.InnerException?.Message}");
-                errorResponseVM = new ErrorResponseVM(HttpStatusCode.InternalServerError, false, errors);
+                errorResponseVM = new ErrorResponseVM(false, errors);
             }
             else
             {
                 errors.Add("Ocorreu um erro interno do servidor.");
-                errorResponseVM = new ErrorResponseVM(HttpStatusCode.InternalServerError, false, errors);
+                errorResponseVM = new ErrorResponseVM(false, errors);
             }
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

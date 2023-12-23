@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DescomplicaEventos.Domain.Entities
 {
-    public class UserEntity : BaseEntity
+    public class User : BaseEntity
     {
         public string  Email { get; private set; }
         public string Name { get; private set; }
@@ -14,7 +14,7 @@ namespace DescomplicaEventos.Domain.Entities
         public byte[] PasswordHash { get; private set; }
         public byte[] PasswordSalt { get; private set; }
 
-        public UserEntity(string email, string name, int idade)
+        public User(string email, string name, int idade)
         {
             Email = email;
             Name = name;

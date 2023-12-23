@@ -9,12 +9,11 @@ using DescomplicaEventos.Domain.Entities;
 
 namespace DescomplicaEventos.Application.Mappings
 {
-    public class DomainMapperProfile : Profile
+    public class DomainToDtoMapping : Profile
     {
-        public DomainMapperProfile()
+        public DomainToDtoMapping()
         {
-            CreateMap<UserDto, UserEntity>();
-            CreateMap<UserEntity, UserVM>();
+            CreateMap<User, UserDto>();
         }
     }
 }

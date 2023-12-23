@@ -1,14 +1,11 @@
-using System.Net;
 using DescomplicaEventos.API.Controllers.Shared;
 using DescomplicaEventos.Application.DTOs;
 using DescomplicaEventos.Application.ViewModel;
-using DescomplicaEventos.Application.ViewModel.Shared;
 using DescomplicaEventos.Domain.Account;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DescomplicaEventos.API.Controllers
 {
-    [Route("v1/[controller]")]
     public class AuthenticationController : ApiControllerBase
     {
         private readonly IAuthenticate _authenticateService;

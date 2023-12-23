@@ -10,7 +10,7 @@ namespace DescomplicaEventos.Infra.Data.Context
             Database.Migrate();
         }
 
-        public DbSet<UserEntity> users { get; set; }
+        public DbSet<User> users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

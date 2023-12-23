@@ -26,6 +26,23 @@ namespace DescomplicaEventos.Infra.IoC
                 b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
             });
 
+            services.AddScoped<IAuthenticate, AuthenticateService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            
+            return services;
+        }
+
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAutoMapper(typeof(DomainToDtoMapping));
+
+            services.AddScoped<IUserService, UserService>();
+            
+            return services;
+        }
+
+        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
             services.AddAuthentication(opt => 
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,16 +62,6 @@ namespace DescomplicaEventos.Infra.IoC
                     ClockSkew = TimeSpan.Zero
                 };
             });
-
-            services.AddAutoMapper(typeof(DomainMapperProfile));
-            
-            //Services
-            services.AddTransient<IAuthenticate, AuthenticateService>();
-            services.AddTransient<IUserService, UserService>();
-
-            //Repositories
-            services.AddTransient<IUserRepository, UserRepository>();
-            
 
             return services;
         }

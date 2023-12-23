@@ -6,7 +6,7 @@ using DescomplicaEventos.Domain.Entities;
 
 namespace DescomplicaEventos.Domain.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<UserEntity>
+    public interface IUserRepository : IBaseRepository<User>
     {
         
     }

@@ -6,28 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DescomplicaEventos.API.Controllers
 {
-    [Route("v1/[controller]")]
     public class UserController : ApiControllerBase
     {
-        private readonly IUserService _service;
-        public UserController(IUserService service)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
-            _service = service;
+            _userService = userService;
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var retorno = await _service.GetAllAsync();
-            return ResponseOk(retorno);   
+            var result = await _userService.GetAllAsync();
+            return ResponseOk(result.Data);   
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserDto userDto)
         {
-            var user = await _service.CreateAsync(userDto, true);
-            return ResponseCreated(user);
+            var result = await _userService.CreateAsync(userDto, true);
+            if(result.IsSuccess)
+                return ResponseOk(result.Data);
+
+            return ResponseBadRequest(result.Errors);
         }
     }
 }
